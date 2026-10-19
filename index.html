@@ -41,6 +41,14 @@
           <dt>Saldo</dt>
           <dd id="saldo">Rp 0</dd>
         </div>
+        <div class="kartu">
+          <dt>Saldo Pribadi</dt>
+          <dd id="saldo-pribadi">Rp 0</dd>
+        </div>
+        <div class="kartu">
+          <dt>Saldo Usaha</dt>
+          <dd id="saldo-usaha">Rp 0</dd>
+        </div>
       </dl>
     </section>
 
@@ -62,8 +70,25 @@
             <select id="input-jenis" name="jenis" required>
               <option value="pemasukan">Pemasukan</option>
               <option value="pengeluaran">Pengeluaran</option>
+              <option value="transfer">Transfer</option>
             </select>
             <p class="pesan-error" id="error-jenis"></p>
+          </div>
+
+          <div class="field">
+            <label for="input-dompet">Dompet Asal</label>
+            <select id="input-dompet" name="dompet">
+              <option value="Pribadi">Pribadi</option>
+              <option value="Usaha">Usaha</option>
+            </select>
+          </div>
+
+          <div class="field" id="field-dompet-tujuan" hidden>
+            <label for="input-dompet-tujuan">Dompet Tujuan</label>
+            <select id="input-dompet-tujuan" name="dompetTujuan" disabled>
+              <option value="Pribadi">Pribadi</option>
+              <option value="Usaha">Usaha</option>
+            </select>
           </div>
 
           <div class="field">
@@ -75,7 +100,7 @@
               <option value="Belanja">Belanja</option>
               <option value="Hiburan">Hiburan</option>
               <option value="Sewa">Sewa</option>
-               <option value="Lainnya">Lainnya</option>
+              <option value="Lainnya">Lainnya</option>
             </select>
             <p class="pesan-error" id="error-kategori"></p>
           </div>
@@ -110,6 +135,6 @@
     <p>Data tersimpan di browser kamu.</p>
   </footer>
 
-  <!-- Tahap berikutnya: JavaScript akan ditambahkan di sini -->
+  <script src="script.js"></script>
 </body>
 </html>

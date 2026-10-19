@@ -18,5 +18,11 @@ Karena persona saya adalah pedagang kecil, setiap transaksi wajib memiliki label
     dompetTujuan: "usaha"   // hanya ada kalau jenis === "transfer"
 }
 ```
-Alasan pemilihan struktur data: Saya memutuskan "transfer" sebagai satu tipe transaksi dengan atribut tambahan dompetTujuan, alih-alih membuat dua transaksi terpisah (pengeluaran dari Dompet A dan pemasukan ke Dompet B). Ini membuat data lebih rapi di localStorage dan mencegah perhitungan ganda di ringkasan saldo utama.
+## Alasan pemilihan struktur data:
+ Saya memutuskan "transfer" sebagai satu tipe transaksi dengan atribut tambahan dompetTujuan, alih-alih membuat dua transaksi terpisah (pengeluaran dari Dompet A dan pemasukan ke Dompet B). Ini membuat data lebih rapi di localStorage dan mencegah perhitungan ganda di ringkasan saldo utama.
 
+
+## Keputusan Desain & Alasan
+
+Keputusan: Saya memutuskan bahwa transaksi berjenis "transfer" dikecualikan dari perhitungan total Pemasukan dan Pengeluaran di ringkasan utama layar.
+Alasan: Transfer antar dompet (misalnya memindahkan keuntungan usaha ke dompet pribadi) hanyalah perpindahan internal. Jika dihitung sebagai pengeluaran/pemasukan, itu akan merusak laporan omzet murni dari usaha si pedagang.
