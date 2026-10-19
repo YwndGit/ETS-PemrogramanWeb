@@ -8,7 +8,6 @@ const inputDompetTujuan = document.querySelector("#input-dompet-tujuan");
 const inputKategori = document.querySelector("#input-kategori");
 const inputNominal = document.querySelector("#input-nominal");
 const inputCatatan = document.querySelector("#input-catatan");
-const errorNominal = document.querySelector("#error-nominal");
 const daftarElemen = document.querySelector("#daftar-transaksi");
 const pesanKosong = document.querySelector("#pesan-kosong");
 const elemenTotalPemasukan = document.querySelector("#total-pemasukan");
@@ -16,6 +15,14 @@ const elemenTotalPengeluaran = document.querySelector("#total-pengeluaran");
 const elemenSaldo = document.querySelector("#saldo");
 const elemenSaldoPribadi = document.querySelector("#saldo-pribadi");
 const elemenSaldoUsaha = document.querySelector("#saldo-usaha");
+
+// Elemen DOM untuk Error Validasi (W6)
+const errorTanggal = document.querySelector("#error-tanggal");
+const errorJenis = document.querySelector("#error-jenis");
+const errorKategori = document.querySelector("#error-kategori");
+const errorDompet = document.querySelector("#error-dompet");
+const errorDompetTujuan = document.querySelector("#error-dompet-tujuan");
+const errorNominal = document.querySelector("#error-nominal");
 
 // ===== 2. State (data aplikasi) =====
 const KUNCI_STORAGE = "transaksi";
@@ -46,7 +53,6 @@ function formatRupiah(nominal) {
   return `Rp ${nominal.toLocaleString("id-ID")}`;
 }
 
-// Tampilkan "Dompet Tujuan" hanya jika jenis = Transfer
 function aturDompetTujuan() {
   const adalahTransfer = inputJenis.value === "transfer";
   fieldDompetTujuan.hidden = !adalahTransfer;
@@ -54,12 +60,10 @@ function aturDompetTujuan() {
 }
 
 // ===== 5. Render ke layar (W2) =====
-// Membuat satu <li> untuk satu transaksi
 function buatItemTransaksi(transaksi) {
   const li = document.createElement("li");
   li.className = "item-transaksi";
 
-  // Bagian kiri: kategori, detail, catatan
   const info = document.createElement("div");
 
   const judul = document.createElement("strong");
@@ -82,7 +86,6 @@ function buatItemTransaksi(transaksi) {
     info.appendChild(catatan);
   }
 
-  // Bagian kanan: nominal berwarna sesuai jenis
   let tanda = "";
   if (transaksi.jenis === "pemasukan") tanda = "+ ";
   if (transaksi.jenis === "pengeluaran") tanda = "- ";
@@ -91,14 +94,12 @@ function buatItemTransaksi(transaksi) {
   nominal.className = `item-nominal angka-${transaksi.jenis}`;
   nominal.textContent = tanda + formatRupiah(transaksi.nominal);
 
-  // Tombol hapus (W3)
   const tombolHapus = document.createElement("button");
   tombolHapus.type = "button";
   tombolHapus.className = "btn-hapus";
   tombolHapus.textContent = "Hapus";
   tombolHapus.addEventListener("click", () => hapusTransaksi(transaksi.id));
 
-  // Kolom kanan: nominal di atas, tombol di bawah
   const kanan = document.createElement("div");
   kanan.className = "item-kanan";
   kanan.appendChild(nominal);
@@ -110,21 +111,20 @@ function buatItemTransaksi(transaksi) {
 }
 
 function renderDaftar() {
-  daftarElemen.innerHTML = ""; // kosongkan dulu supaya tidak dobel
+  daftarElemen.innerHTML = ""; 
   pesanKosong.hidden = daftarTransaksi.length > 0;
 
-  // Loop dari belakang supaya transaksi terbaru tampil paling atas
   for (let i = daftarTransaksi.length - 1; i >= 0; i--) {
     daftarElemen.appendChild(buatItemTransaksi(daftarTransaksi[i]));
   }
 
-  hitungRingkasan(); // <-- tambahan
+  hitungRingkasan(); 
 }
 
 // ===== W3: Hapus transaksi =====
 function hapusTransaksi(id) {
   if (!window.confirm("Apakah Anda yakin ingin menghapus transaksi ini?")) {
-    return; // user menekan Cancel, berhenti
+    return; 
   }
 
   daftarTransaksi = daftarTransaksi.filter((transaksi) => transaksi.id !== id);
@@ -146,7 +146,6 @@ function hitungRingkasan() {
       totalPengeluaran += transaksi.nominal;
       saldoDompet[transaksi.dompet] -= transaksi.nominal;
     } else if (transaksi.jenis === "transfer") {
-      // Transfer tidak masuk total, hanya memindahkan saldo antar dompet
       saldoDompet[transaksi.dompet] -= transaksi.nominal;
       saldoDompet[transaksi.dompetTujuan] += transaksi.nominal;
     }
@@ -161,20 +160,61 @@ function hitungRingkasan() {
   elemenSaldoUsaha.textContent = formatRupiah(saldoDompet.Usaha);
 }
 
-// ===== 6. Event listener (W1) =====
+// ===== 6. Event listener (W1 & W6) =====
 inputJenis.addEventListener("change", aturDompetTujuan);
 
 form.addEventListener("submit", (event) => {
   event.preventDefault(); // cegah halaman reload
 
-  // Validasi: nominal harus lebih dari 0
-  const nominal = Number(inputNominal.value);
-  if (!(nominal > 0)) {
-    errorNominal.textContent = "Nominal harus lebih dari 0.";
-    return;
-  }
+  // Kosongkan semua pesan error lama
+  errorTanggal.textContent = "";
+  errorJenis.textContent = "";
+  errorKategori.textContent = "";
+  errorDompet.textContent = "";
+  errorDompetTujuan.textContent = "";
   errorNominal.textContent = "";
 
+  let adaError = false;
+
+  // Validasi field wajib (W6)
+  if (!inputTanggal.value) {
+    errorTanggal.textContent = "Tanggal wajib diisi";
+    adaError = true;
+  }
+  if (!inputJenis.value) {
+    errorJenis.textContent = "Jenis wajib dipilih";
+    adaError = true;
+  }
+  // Pengecualian kategori khusus transfer agar tetap rapi
+  if (inputJenis.value !== "transfer" && !inputKategori.value) {
+    errorKategori.textContent = "Kategori wajib dipilih";
+    adaError = true;
+  }
+  if (!inputDompet.value) {
+    errorDompet.textContent = "Dompet asal wajib dipilih";
+    adaError = true;
+  }
+  if (inputJenis.value === "transfer" && !inputDompetTujuan.value) {
+    errorDompetTujuan.textContent = "Dompet tujuan wajib dipilih";
+    adaError = true;
+  }
+
+  // Validasi nominal (W6)
+  const nominal = Number(inputNominal.value);
+  if (!inputNominal.value) {
+    errorNominal.textContent = "Nominal wajib diisi";
+    adaError = true;
+  } else if (!(nominal > 0)) {
+    errorNominal.textContent = "Nominal harus lebih dari 0";
+    adaError = true;
+  }
+
+  // Berhenti kalau ada error
+  if (adaError) {
+    return;
+  }
+
+  // Simpan data jika valid
   const transaksiBaru = {
     id: Date.now(),
     tanggal: inputTanggal.value,
@@ -185,7 +225,7 @@ form.addEventListener("submit", (event) => {
     catatan: inputCatatan.value.trim()
   };
 
-  // Fitur khas: transfer punya dompet tujuan
+  // Logika khusus transfer
   if (transaksiBaru.jenis === "transfer") {
     transaksiBaru.dompetTujuan = inputDompetTujuan.value;
     transaksiBaru.kategori = "Transfer";
@@ -196,7 +236,7 @@ form.addEventListener("submit", (event) => {
   renderDaftar();
 
   form.reset();
-  aturDompetTujuan(); // reset tidak memicu event "change", jadi panggil manual
+  aturDompetTujuan();
 });
 
 // ===== 7. Jalankan saat halaman dibuka =====

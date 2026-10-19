@@ -13,7 +13,7 @@ Sebagai pedagang kecil, uang pribadi dan uang usaha saya sering tercampur di sat
 - [x] W3 — Hapus transaksi dengan konfirmasi
 - [x] W4 — Data persisten di localStorage
 - [x] W5 — Ringkasan total pemasukan, pengeluaran, saldo (otomatis update)
-- [ ] W6 — Validasi form (nominal > 0, field wajib, pesan error di halaman)
+- [x] W6 — Validasi form (nominal > 0, field wajib, pesan error di halaman)
 
 ## Fitur Khas Persona
 - [x] Transaksi masuk ke dompet "Pribadi" atau "Usaha"
@@ -24,4 +24,4 @@ Sebagai pedagang kecil, uang pribadi dan uang usaha saya sering tercampur di sat
 - [x] Tampilan responsif yang tetap rapi di layar HP selebar 360px
 
 ## Belum Selesai
-Fitur W6 sedang dalam tahap penyelesaian. Fitur bonus filter dan edit transaksi tidak sempat dikerjakan karena keterbatasan waktu.
+Semua fitur wajib dan khas persona sudah selesai. Fitur bonus filter dan edit transaksi tidak sempat dikerjakan karena keterbatasan waktu.

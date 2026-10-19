@@ -18,3 +18,8 @@ Link percakapan AI :
 - Prompt: Meminta fungsi hapusTransaksi(id) dengan konfirmasi window.confirm() dan fungsi hitungRingkasan() untuk menghitung saldo dengan memisahkan transaksi transfer antar dompet.
 - Dipakai: Fungsi `hapusTransaksi()`, `hitungRingkasan()`, dan penambahan tombol "Hapus" pada render DOM `<li>`.
 - Diubah: Menambahkan kartu "Saldo Pribadi" dan "Saldo Usaha" pada HTML secara manual agar sinkron dengan output JavaScript.
+
+## 4. Validasi Form Lengkap (W6)
+- **Prompt:** "Oke, fitur hapus (W3) dan ringkasan (W5) sudah berjalan... Berikan modifikasi kode secara terfokus pada script.js yang ada, KHUSUS untuk bagian `form.addEventListener("submit", ...)` saja untuk Validasi Field Wajib dan Nominal..."
+- **Dipakai:** Seluruh blok kode pembaruan di dalam `form.addEventListener("submit", ...)` yang mengecek validasi per variabel dan menyimpan pesan error ke DOM.
+- **Diubah:** Saya menambahkan secara manual dua elemen `<p class="pesan-error">` pada bagian dompet di HTML agar sinkron dengan referensi DOM pada JavaScript baru.
