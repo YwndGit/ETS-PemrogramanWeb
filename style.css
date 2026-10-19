@@ -1,0 +1,221 @@
+/* ===== 1. Reset dasar ===== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ===== 2. Variabel (warna, jarak, bentuk) ===== */
+:root {
+  --warna-utama: #2f5d8a;
+  --warna-utama-gelap: #234769;
+  --warna-latar: #f3f6f9;
+  --warna-kartu: #ffffff;
+  --warna-teks: #1f2933;
+  --warna-teks-samar: #52606d;
+  --warna-garis: #d5dde5;
+  --warna-pemasukan: #2e7d4f;
+  --warna-pengeluaran: #b3372f;
+
+  --spasi-kecil: 0.5rem;
+  --spasi-dasar: 1rem;
+  --spasi-besar: 1.5rem;
+  --radius: 0.5rem;
+}
+
+/* ===== 3. Gaya dasar halaman ===== */
+html {
+  font-size: 100%; /* = 16px, mengikuti pengaturan pengguna */
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.5;
+  color: var(--warna-teks);
+  background-color: var(--warna-latar);
+
+  /* Flexbox kolom: footer selalu menempel di bawah layar */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+h1, h2 {
+  line-height: 1.2;
+}
+
+h2 {
+  font-size: 1.25rem;
+  margin-bottom: var(--spasi-dasar);
+}
+
+/* ===== 4. Header & footer ===== */
+.header-utama {
+  background-color: var(--warna-utama);
+  color: #ffffff;
+  padding: var(--spasi-besar) var(--spasi-dasar);
+  text-align: center;
+}
+
+.header-utama h1 {
+  font-size: 1.75rem;
+}
+
+.header-utama p {
+  margin-top: var(--spasi-kecil);
+  opacity: 0.9;
+}
+
+.footer-utama {
+  padding: var(--spasi-dasar);
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--warna-teks-samar);
+}
+
+/* ===== 5. Konten utama ===== */
+.konten-utama {
+  flex: 1; /* mengisi sisa tinggi layar */
+  width: 100%;
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: var(--spasi-dasar);
+
+  /* Flexbox kolom + gap: jarak antar section rapi */
+  display: flex;
+  flex-direction: column;
+  gap: var(--spasi-dasar);
+}
+
+.kotak {
+  background-color: var(--warna-kartu);
+  border: 1px solid var(--warna-garis);
+  border-radius: var(--radius);
+  padding: var(--spasi-dasar);
+}
+
+/* ===== 6. Ringkasan (CSS Grid) ===== */
+.ringkasan-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: var(--spasi-dasar);
+}
+
+.kartu {
+  background-color: var(--warna-kartu);
+  border: 1px solid var(--warna-garis);
+  border-radius: var(--radius);
+  padding: var(--spasi-dasar);
+}
+
+.kartu dt {
+  font-size: 0.875rem;
+  color: var(--warna-teks-samar);
+}
+
+.kartu dd {
+  margin-top: var(--spasi-kecil);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.angka-pemasukan {
+  color: var(--warna-pemasukan);
+}
+
+.angka-pengeluaran {
+  color: var(--warna-pengeluaran);
+}
+
+/* ===== 7. Form (CSS Grid) ===== */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: var(--spasi-dasar);
+  margin-bottom: var(--spasi-dasar);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.field-lebar {
+  grid-column: 1 / -1; /* membentang dari kolom pertama sampai terakhir */
+}
+
+label {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+input,
+select {
+  font: inherit;
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--warna-garis);
+  border-radius: var(--radius);
+  background-color: #ffffff;
+  color: var(--warna-teks);
+}
+
+input:focus-visible,
+select:focus-visible,
+.tombol:focus-visible {
+  outline: 3px solid var(--warna-utama);
+  outline-offset: 2px;
+}
+
+/* Pesan error validasi (diisi oleh JS di tahap berikutnya) */
+.pesan-error {
+  min-height: 1.25rem;
+  font-size: 0.8125rem;
+  color: var(--warna-pengeluaran);
+}
+
+.tombol {
+  font: inherit;
+  font-weight: 600;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: var(--radius);
+  background-color: var(--warna-utama);
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.tombol:hover {
+  background-color: var(--warna-utama-gelap);
+}
+
+/* ===== 8. Daftar transaksi ===== */
+.daftar {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spasi-kecil);
+}
+
+.pesan-kosong {
+  color: var(--warna-teks-samar);
+}
+
+/* ===== 9. Responsif dasar ===== */
+/* Layar lebar (tablet ke atas): ruang lebih lega, tombol tidak selebar penuh */
+@media (min-width: 40rem) {
+  .konten-utama {
+    padding: var(--spasi-besar);
+    gap: var(--spasi-besar);
+  }
+
+  .kotak {
+    padding: var(--spasi-besar);
+  }
+
+  .tombol {
+    width: auto;
+  }
+}

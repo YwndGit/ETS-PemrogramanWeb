@@ -1,13 +1,115 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+  <!-- ===== Metadata dasar ===== -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Aplikasi pencatat keuangan pribadi untuk mencatat pemasukan dan pengeluaran harian.">
+
+  <!-- ===== Pratinjau media sosial & tampilan HP ===== -->
+  <meta property="og:title" content="Personal Money Management">
+  <meta name="theme-color" content="#2f5d8a">
+
+  <!-- Favicon berupa emoji (data URI), jadi tidak perlu berkas gambar terpisah -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%B0%3C/text%3E%3C/svg%3E">
+
+  <title>Personal Money Management</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Hello, World!</h1>
-     <script src="script.js"></script>
+
+  <header class="header-utama">
+    <h1>Catatan Keuangan</h1>
+    <p>Catat pemasukan dan pengeluaranmu setiap hari.</p>
+  </header>
+
+  <main class="konten-utama">
+
+    <!-- Ringkasan: total pemasukan, total pengeluaran, saldo -->
+    <section class="ringkasan" aria-labelledby="judul-ringkasan">
+      <h2 id="judul-ringkasan">Ringkasan</h2>
+      <dl class="ringkasan-grid">
+        <div class="kartu">
+          <dt>Total Pemasukan</dt>
+          <dd id="total-pemasukan" class="angka-pemasukan">Rp 0</dd>
+        </div>
+        <div class="kartu">
+          <dt>Total Pengeluaran</dt>
+          <dd id="total-pengeluaran" class="angka-pengeluaran">Rp 0</dd>
+        </div>
+        <div class="kartu">
+          <dt>Saldo</dt>
+          <dd id="saldo">Rp 0</dd>
+        </div>
+      </dl>
+    </section>
+
+    <!-- Form tambah transaksi -->
+    <section class="kotak" aria-labelledby="judul-form">
+      <h2 id="judul-form">Tambah Transaksi</h2>
+
+      <form id="form-transaksi" novalidate>
+        <div class="form-grid">
+
+          <div class="field">
+            <label for="input-tanggal">Tanggal</label>
+            <input type="date" id="input-tanggal" name="tanggal" required>
+            <p class="pesan-error" id="error-tanggal"></p>
+          </div>
+
+          <div class="field">
+            <label for="input-jenis">Jenis</label>
+            <select id="input-jenis" name="jenis" required>
+              <option value="pemasukan">Pemasukan</option>
+              <option value="pengeluaran">Pengeluaran</option>
+            </select>
+            <p class="pesan-error" id="error-jenis"></p>
+          </div>
+
+          <div class="field">
+            <label for="input-kategori">Kategori</label>
+            <select id="input-kategori" name="kategori" required>
+              <option value="">Pilih kategori</option>
+              <option value="Makan">Makan</option>
+              <option value="Transport">Transport</option>
+              <option value="Belanja">Belanja</option>
+              <option value="Hiburan">Hiburan</option>
+              <option value="Sewa">Sewa</option>
+               <option value="Lainnya">Lainnya</option>
+            </select>
+            <p class="pesan-error" id="error-kategori"></p>
+          </div>
+
+          <div class="field">
+            <label for="input-nominal">Nominal (Rp)</label>
+            <input type="number" id="input-nominal" name="nominal" min="0" step="1" placeholder="contoh: 25000" required>
+            <p class="pesan-error" id="error-nominal"></p>
+          </div>
+
+          <div class="field field-lebar">
+            <label for="input-catatan">Catatan (opsional)</label>
+            <input type="text" id="input-catatan" name="catatan" placeholder="contoh: Nasi goreng">
+          </div>
+
+        </div>
+
+        <button type="submit" class="tombol">Simpan Transaksi</button>
+      </form>
+    </section>
+
+    <!-- Daftar transaksi: isinya nanti dibuat oleh JavaScript -->
+    <section class="kotak" aria-labelledby="judul-daftar">
+      <h2 id="judul-daftar">Daftar Transaksi</h2>
+      <p id="pesan-kosong" class="pesan-kosong">Belum ada transaksi. Isi form di atas untuk menambah yang pertama.</p>
+      <ul id="daftar-transaksi" class="daftar"></ul>
+    </section>
+
+  </main>
+
+  <footer class="footer-utama">
+    <p>Data tersimpan di browser kamu.</p>
+  </footer>
+
+  <!-- Tahap berikutnya: JavaScript akan ditambahkan di sini -->
 </body>
 </html>
